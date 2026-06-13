@@ -14,9 +14,11 @@ before:
     - go mod tidy
 
 builds:
-  - main: ./...
+  - 
+    main: ./...
     env:
       - CGO_ENABLED=0
+    binary: slingshot
     goos:
       - linux
       - windows
@@ -41,20 +43,6 @@ archives:
       - goos: windows
         formats: [zip]
 
-changelog:
-  sort: asc
-  filters:
-    exclude:
-      - "^docs:"
-      - "^test:"
-
-release:
-  footer: >-
-
-    ---
-
-    Released by [GoReleaser](https://github.com/goreleaser/goreleaser).
-
 homebrew_casks:
   -
     name: slingshot
@@ -62,7 +50,7 @@ homebrew_casks:
     homepage: "https://github.com"
 
     binaries:
-      - cli
+      - slingshot
     
     # Define the repository where GoReleaser will push the cask file
     repository:
