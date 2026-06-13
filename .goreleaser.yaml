@@ -15,9 +15,8 @@ before:
 
 builds:
   - 
-    id: slingshot
+    main: ./main.go
     binary: slingshot
-    main: ./...
     env:
       - CGO_ENABLED=0
     goos:
