@@ -43,3 +43,39 @@ jobs:
     with:
       COMPONENT: ${{ matrix.COMPONENT }}
     secrets: inherit
+
+  goreleaser:
+    needs:
+      - detect-changes
+      - release-library
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Fetch app token
+        id: fetch-app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          owner: ${{ github.repository_owner }}
+          client-id: ${{ secrets.WRITER_APP_CLIENT_ID }}
+          private-key: ${{ secrets.WRITER_APP_PRIVATE_KEY }}
+      -
+        uses: actions/checkout@v6
+        with:
+          token: ${{ steps.fetch-app-token.outputs.token }}
+          fetch-depth: 0
+      -
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+      -
+        name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v7
+        with:
+          # either 'goreleaser' (default) or 'goreleaser-pro'
+          distribution: goreleaser
+          # 'latest', 'nightly', or a semver
+          version: "~> v2"
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ steps.fetch-app-token.outputs.token }}
+          HOMEBREW_TOKEN: ${{ steps.fetch-app-token.outputs.token }}
