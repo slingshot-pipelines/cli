@@ -59,9 +59,8 @@ homebrew_casks:
       # Use the custom token secret you created in Step 2
       token: "{{ .Env.HOMEBREW_TOKEN }}"
 
-    # Injects native Cask stanzas into the generated Ruby definition
-    custom_block: |
-      binary "slingshot"
-      
-      # Maps Cobra's runtime completion logic directly into Homebrew
-      generate_completions_from_executable "#{staged_path}/slingshot", "completion", shells: [:bash, :zsh, :fish]
+    generate_completions_from_executable:
+      args:
+        - completions
+
+      shell_parameter_format: cobra
