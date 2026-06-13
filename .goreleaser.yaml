@@ -60,6 +60,9 @@ homebrew_casks:
     name: slingshot
     description: "Tools for working with slingshot pipelines"
     homepage: "https://github.com"
+
+    binaries:
+      - cli
     
     # Define the repository where GoReleaser will push the cask file
     repository:
