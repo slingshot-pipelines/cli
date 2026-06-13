@@ -1,6 +1,8 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/slingshot-pipelines/jsonschemas/main/schemas/component/v1/component.schema.json
 
-component: infra
-type: terragrunt-infra
+component: cli
+type: library
 
-path: example
+path: .
+source-language: go
+tag-prefix: v

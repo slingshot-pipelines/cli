@@ -50,16 +50,13 @@ jobs:
       COMPONENT: ${{ matrix.COMPONENT }}
     secrets: inherit
 
-  check-github-action:
+  check-libraries:
     needs:
       - detect-changes
-    if: ${{ contains(needs.detect-changes.outputs.changed-component-types, '"github-action"') }}
-    uses: slingshot-pipelines/workflows/.github/workflows/check-github-action.yml@check-github-action/v0
-    strategy:
-      matrix:
-        COMPONENT: ${{ fromJSON(needs.detect-changes.outputs.changed-components-by-type).github-action }}
+    if: ${{ contains(needs.detect-changes.outputs.changed-component-types, '"library"') }}
+    uses: slingshot-pipelines/workflows/.github/workflows/check-libraries.yml@check-libraries/v0
     with:
-      COMPONENT: ${{ matrix.COMPONENT }}
+      COMPONENTS: ${{ toJSON(fromJSON(needs.detect-changes.outputs.changed-components-by-type).library) }}
     secrets: inherit
 
   pr-ready:
@@ -67,7 +64,7 @@ jobs:
       - detect-changes
       - check-components
       - check-github-workflows
-      - check-github-action
+      - check-libraries
     runs-on: ubuntu-latest
     if: ${{ always() }}
     steps:

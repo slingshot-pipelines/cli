@@ -32,3 +32,14 @@ jobs:
         name: Detect changed components
         id: components-changed
         uses: slingshot-pipelines/action-components-changed@v1
+
+  release-library:
+    needs: detect-changes
+    if: ${{ contains(needs.detect-changes.outputs.changed-component-types, '"library"') }}
+    uses: slingshot-pipelines/workflows/.github/workflows/release-library.yml@release-library/v1
+    strategy:
+      matrix:
+        COMPONENT: ${{ fromJSON(needs.detect-changes.outputs.changed-components-by-type).library }}
+    with:
+      COMPONENT: ${{ matrix.COMPONENT }}
+    secrets: inherit
