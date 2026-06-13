@@ -57,7 +57,7 @@ release:
 
 homebrew_casks:
   -
-    name: cli
+    name: slingshot
     description: "Tools for working with slingshot pipelines"
     homepage: "https://github.com"
     
