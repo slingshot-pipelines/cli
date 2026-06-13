@@ -15,10 +15,11 @@ before:
 
 builds:
   - 
+    id: slingshot
+    binary: slingshot
     main: ./...
     env:
       - CGO_ENABLED=0
-    binary: slingshot
     goos:
       - linux
       - windows
