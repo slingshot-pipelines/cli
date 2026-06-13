@@ -1,0 +1,34 @@
+name: on-push
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      changed-component-types: ${{ steps.components-changed.outputs.changed-component-types }}
+      changed-components-by-type: ${{ steps.components-changed.outputs.changed-components-by-type }}
+    steps:
+      -
+        uses: actions/checkout@v6
+      -
+        name: Detect changed components
+        id: components-changed
+        uses: slingshot-pipelines/action-components-changed@v1
