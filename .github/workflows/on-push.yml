@@ -27,7 +27,7 @@ jobs:
       changed-components-by-type: ${{ steps.components-changed.outputs.changed-components-by-type }}
     steps:
       -
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       -
         name: Detect changed components
         id: components-changed
@@ -51,7 +51,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
       -
